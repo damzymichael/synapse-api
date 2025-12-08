@@ -1,9 +1,9 @@
-import 'express';
-import {User} from '@prisma/client';
+import "express"
+import { User } from "@prisma/client"
 
-declare module 'express' {
+declare module "express" {
   interface Request {
-    user?: User;
-    logout: () => Promise<Boolean | void>;
+    user?: User
+    logout: () => Promise<Boolean | void>
   }
 }

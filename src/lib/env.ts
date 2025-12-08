@@ -6,4 +6,5 @@ export default cleanEnv(process.env, {
   DATABASE_URL: str(),
   COOKIE_SECRET: str(),
   CLIENT_URL: str(),
+  NODE_ENV: str({ choices: ["development", "production"] }),
 })

@@ -5,8 +5,8 @@ import cors from "cors"
 import helmet from "helmet"
 import cookieParser from "cookie-parser"
 import createHttpError, { isHttpError } from "http-errors"
-import userRoutes from "./routes/user"
-import env from "./util/env"
+import authRoutes from "./routes/auth.route"
+import env from "./lib/env"
 
 const homeMessage = `
 <div style="display: flex; align-items: center; justify-content: center; height: 90vh"> 
@@ -31,10 +31,10 @@ app.use(express.urlencoded({ extended: true }))
 
 app.get("/", (req, res) => res.status(200).send(homeMessage))
 
-app.use("/auth", userRoutes)
+app.use("/auth", authRoutes)
 
 //Not found
-app.use((req, res, next) => next(createHttpError(404, "Endpoint not found")))
+app.use((_, __, next) => next(createHttpError(404, "Endpoint not found")))
 
 //Error Middleware
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -47,7 +47,7 @@ app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
     statusCode = error.status
     errorMessage = error.message
   }
-  res.status(statusCode).json(errorMessage)
+  res.status(statusCode).json({ message: errorMessage })
 })
 
 export default app
