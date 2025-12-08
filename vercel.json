@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "./dist/index.js",
+      "use": "@vercel/node",
+      "config": {"includeFiles": ["dist/**"]}
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "dist/index.js"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api-docs/swagger-ui.css",
+      "headers": [{"key": "Content-Type", "value": "text/css"}]
+    },
+    {
+      "source": "/api-docs/swagger-ui-bundle.js",
+      "headers": [{"key": "Content-Type", "value": "application/javascript"}]
+    },
+    {
+      "source": "/api-docs/swagger-ui-standalone-preset.js",
+      "headers": [{"key": "Content-Type", "value": "application/javascript"}]
+    }
+  ]
+}
