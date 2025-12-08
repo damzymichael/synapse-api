@@ -31,7 +31,7 @@ app.use(express.urlencoded({ extended: true }))
 
 app.get("/", (req, res) => res.status(200).send(homeMessage))
 
-app.use("/user", userRoutes)
+app.use("/auth", userRoutes)
 
 //Not found
 app.use((req, res, next) => next(createHttpError(404, "Endpoint not found")))

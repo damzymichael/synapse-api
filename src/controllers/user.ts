@@ -18,19 +18,11 @@ type Login = Pick<UserSchema, "email" | "password">
 export default Controller({
   async register(req: Request<{}, {}, UserSchema>, res) {
     const { email, password, skillName, skillLevel } = req.body
-
     const exists = await prisma.user.findFirst({ where: { email } })
-
     if (exists) throw createHttpError(403, "Account already exists, please login")
-
     const hashedPW = await hash(password, 10)
-
-    //* Add role of user by default
-    const user = await prisma.user.create({ data: { ...req.body, password: hashedPW } })
-
-    const { email: _email, id } = user
-
-    return res.status(200).json({ message: "Sign up successful", userId: id })
+    await prisma.user.create({ data: { ...req.body, password: hashedPW } })
+    return res.status(200).json({ message: "Sign up successful" })
   },
 
   async logout(req, res) {

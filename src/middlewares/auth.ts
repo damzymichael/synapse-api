@@ -40,6 +40,7 @@ const verifyUser = asyncWrapper(async (req: MiddlewareRequest, res, next) => {
 const authenticate = Controller({
   async user(req, res, next) {
     const token = req.cookies.jwt
+    
     if (!token) throw createHttpError(401, "Unauthorized - No token provided")
 
     const decoded = jwt.verify(token, env.JWT_SECRET)
