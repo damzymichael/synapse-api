@@ -3,7 +3,7 @@ import { User } from "@prisma/client"
 
 declare module "express" {
   interface Request {
-    user?: User
+    user?: { email: string; fullName: string }
     logout: () => Promise<Boolean | void>
   }
 }

@@ -22,12 +22,16 @@ const authenticate = Controller({
 
     if (!token) throw createHttpError(401, "Unauthorized - No token provided")
 
-    const decoded = jwt.verify(token, env.JWT_SECRET)
+    const decoded = jwt.verify(token, env.JWT_SECRET) as { userId: string }
 
     if (!decoded) throw createHttpError(401, "Session expired")
 
-    const user = await prisma.user.findUnique({ where: { id: decoded as string } })
+    const user = await prisma.user.findUnique({
+      where: { id: decoded.userId },
+      select: { email: true, fullName: true },
+    })
 
+    console.log(user)
     if (!user) throw createHttpError(404, "User not found")
 
     req.user = user

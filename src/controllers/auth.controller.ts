@@ -29,7 +29,7 @@ export default Controller({
 
     const user = await prisma.user.create({
       data: { email, fullName, password: hashedPW },
-      select: { id: true },
+      select: { id: true, email: true, fullName: true },
     })
 
     if (skillName && skillLevel) {
@@ -49,7 +49,7 @@ export default Controller({
       secure: env.NODE_ENV === "development" ? false : true,
     })
 
-    return res.status(201).json({ message: "Sign up successful" })
+    return res.status(201).json({ email: user.email, fullName: user.fullName })
   },
 
   async login(req: Request<{}, {}, Login>, res) {
@@ -57,7 +57,7 @@ export default Controller({
 
     const user = await prisma.user.findUnique({
       where: { email },
-      select: { password: true, id: true },
+      select: { email: true, fullName: true, password: true, id: true },
     })
 
     if (!user) throw createHttpError(404, "Invalid credentials")
@@ -78,7 +78,7 @@ export default Controller({
       secure: env.NODE_ENV === "development" ? false : true,
     })
 
-    return res.status(200).send({ message: "Login successful" })
+    return res.status(200).send({ email: user.email, fullName: user.fullName })
   },
 
   async logout(req, res) {
