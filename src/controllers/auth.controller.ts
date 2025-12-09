@@ -44,7 +44,8 @@ export default Controller({
       signed: true,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in MS
       httpOnly: true, // prevent XSS attacks: cross-site scripting
-      sameSite: "strict", // CSRF attacks
+      sameSite: false,
+      // sameSite: "strict", // CSRF attacks
       secure: env.NODE_ENV === "development" ? false : true,
     })
 
@@ -73,7 +74,7 @@ export default Controller({
       signed: true,
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in MS
       httpOnly: true,
-      sameSite: "strict",
+      sameSite: false,
       secure: env.NODE_ENV === "development" ? false : true,
     })
 

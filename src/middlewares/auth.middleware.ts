@@ -8,7 +8,7 @@ const logout = asyncWrapper(async (req, res, next) => {
   req.logout = async () => {
     res.clearCookie("session.token", {
       signed: true,
-      sameSite: "none",
+      sameSite: false,
       secure: true,
     })
     return true
