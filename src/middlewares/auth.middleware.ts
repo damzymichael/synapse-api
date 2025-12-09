@@ -20,6 +20,8 @@ const authenticate = Controller({
   async user(req, res, next) {
     const token = req.signedCookies["session.token"]
 
+    console.log(token)
+    
     if (!token) throw createHttpError(401, "Unauthorized - No token provided")
 
     const decoded = jwt.verify(token, env.JWT_SECRET) as { userId: string }
@@ -31,7 +33,6 @@ const authenticate = Controller({
       select: { email: true, fullName: true },
     })
 
-    console.log(user)
     if (!user) throw createHttpError(404, "User not found")
 
     req.user = user
