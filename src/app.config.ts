@@ -21,7 +21,7 @@ app.use(helmet())
 
 app.use(morgan("dev"))
 
-app.use(cors({ origin: [env.CLIENT_URL], credentials: true }))
+app.use(cors({ origin: [env.CLIENT_URL, "http://localhost:5173"], credentials: true }))
 
 app.use(cookieParser(env.COOKIE_SECRET))
 
