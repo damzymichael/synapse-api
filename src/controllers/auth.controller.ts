@@ -42,11 +42,10 @@ export default Controller({
 
     res.cookie("session.token", token, {
       signed: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in MS
-      httpOnly: true, // prevent XSS attacks: cross-site scripting
-      sameSite: false,
-      // sameSite: "strict", // CSRF attacks
-      secure: env.NODE_ENV === "development" ? false : true,
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      sameSite: "none",
+      secure: true,
     })
 
     return res.status(201).json({ email: user.email, fullName: user.fullName })
@@ -72,10 +71,10 @@ export default Controller({
 
     res.cookie("session.token", token, {
       signed: true,
-      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days in MS
       httpOnly: true,
-      sameSite: false,
-      secure: env.NODE_ENV === "development" ? false : true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      sameSite: "none",
+      secure: true,
     })
 
     return res.status(200).send({ email: user.email, fullName: user.fullName })

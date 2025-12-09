@@ -8,7 +8,9 @@ const logout = asyncWrapper(async (req, res, next) => {
   req.logout = async () => {
     res.clearCookie("session.token", {
       signed: true,
-      sameSite: false,
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      sameSite: "none",
       secure: true,
     })
     return true
@@ -21,7 +23,7 @@ const authenticate = Controller({
     const token = req.signedCookies["session.token"]
 
     console.log(token)
-    
+
     if (!token) throw createHttpError(401, "Unauthorized - No token provided")
 
     const decoded = jwt.verify(token, env.JWT_SECRET) as { userId: string }
