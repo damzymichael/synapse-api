@@ -1,7 +1,7 @@
 {
-  "name": "vootv-api",
+  "name": "synapse-api",
   "version": "1.0.0",
-  "description": "Rest api for voice of one tv mobile application",
+  "description": "Synapse API",
   "main": "./dist/index.js",
   "engines": {
     "node": ">=20.0.0"

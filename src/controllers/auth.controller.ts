@@ -48,7 +48,7 @@ export default Controller({
       secure: true,
     })
 
-    return res.status(201).json({ email: user.email, fullName: user.fullName })
+    return res.status(201).send({ email: user.email, fullName: user.fullName })
   },
 
   async login(req: Request<{}, {}, Login>, res) {
