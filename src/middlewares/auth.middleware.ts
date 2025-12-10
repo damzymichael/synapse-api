@@ -22,8 +22,6 @@ const authenticate = Controller({
   async user(req, res, next) {
     const token = req.signedCookies["session.token"]
 
-    console.log(token)
-
     if (!token) throw createHttpError(401, "Unauthorized - No token provided")
 
     const decoded = jwt.verify(token, env.JWT_SECRET) as { userId: string }
@@ -32,7 +30,7 @@ const authenticate = Controller({
 
     const user = await prisma.user.findUnique({
       where: { id: decoded.userId },
-      select: { email: true, fullName: true },
+      select: { id: true, email: true, fullName: true },
     })
 
     if (!user) throw createHttpError(404, "User not found")
