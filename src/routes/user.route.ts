@@ -4,8 +4,16 @@ import { authenticate } from "../middlewares/auth.middleware"
 
 const router = Router()
 
-router.get("/profile", authenticate.user, controller.getProfile)
+router.use(authenticate.user)
 
-router.patch("/profile", authenticate.user, controller.updateProfile)
+router.get("/profile", controller.getProfile)
+
+router.patch("/profile", controller.updateProfile)
+
+router.get("/skills", controller.getSkills)
+
+router.post("/skills", controller.addSkill)
+
+router.delete("/skills/:id", controller.deleteSkill)
 
 export default router
