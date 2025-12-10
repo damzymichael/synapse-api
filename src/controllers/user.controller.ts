@@ -32,7 +32,7 @@ export default Controller({
   async getSkills(req, res) {
     const skills = await prisma.skill.findMany({
       where: { userId: req.user.id },
-      select: { name: true, level: true },
+      select: { id: true, name: true, level: true },
     })
 
     return res.status(200).send(skills)
