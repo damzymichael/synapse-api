@@ -7,6 +7,7 @@ import cookieParser from "cookie-parser"
 import createHttpError, { isHttpError } from "http-errors"
 import authRoutes from "./routes/auth.route"
 import userRoutes from "./routes/user.route"
+import walletRoutes from "./routes/wallet.route"
 import env from "./lib/env"
 
 const homeMessage = `
@@ -35,6 +36,8 @@ app.get("/", (req, res) => res.status(200).send(homeMessage))
 app.use("/auth", authRoutes)
 
 app.use("/user", userRoutes)
+
+app.use("/wallet", walletRoutes)
 
 //Not found
 app.use((_, __, next) => next(createHttpError(404, "Endpoint not found")))
