@@ -14,7 +14,7 @@ model User {
   password  String
   bio       String?
   aboutMe   String?
-  credit    Int      @default(0)
+  credit    Int      @default(20)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   skills    Skill[]

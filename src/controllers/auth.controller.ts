@@ -28,7 +28,7 @@ export default Controller({
     const hashedPW = await hash(password, 10)
 
     const user = await prisma.user.create({
-      data: { email, fullName, password: hashedPW },
+      data: { email, fullName, password: hashedPW, credit: 20 },
       select: { id: true, email: true, fullName: true },
     })
 
