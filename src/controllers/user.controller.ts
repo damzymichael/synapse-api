@@ -41,7 +41,9 @@ export default Controller({
   async addSkill(req: Request<{}, {}, AddSKillSchema>, res) {
     const { name, level, credit } = req.body
 
-    await prisma.skill.create({ data: { userId: req.user.id, name, level, credit } })
+    await prisma.skill.create({
+      data: { userId: req.user.id, name, level, credit: Number(credit) },
+    })
 
     return res.status(201).send("Skill added successfully")
   },
