@@ -40,7 +40,36 @@ export default Controller({
         where: { id: userId },
         data: { credit: { increment: req.body.data.object.amount / 100 } },
       })
+
+      // @ts-ignore
+      sendSseToUser(userId, req.body.data.object.amount / 100)
     }
     return res.json({ received: true })
+  },
+
+  async handleConnection(req, res) {
+    //@ts-ignore
+    const userId = req.user.id
+
+    // SSE headers
+    res.setHeader("Content-Type", "text/event-stream")
+    res.setHeader("Cache-Control", "no-cache")
+    res.setHeader("Connection", "keep-alive")
+
+    // Let the client know we're connected
+    res.write(`data: "Connected to server-sent events"\n\n`)
+
+    // Store this connection globally or in memory
+    global.sseClients = global.sseClients || {}
+
+    global.sseClients[userId] = res
+
+    console.log(`User ${userId} connected to SSE`)
+
+    // Cleanup on disconnect
+    req.on("close", () => {
+      console.log(`User ${userId} disconnected`)
+      delete global.sseClients[userId]
+    })
   },
 })
