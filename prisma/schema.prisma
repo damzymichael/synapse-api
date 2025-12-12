@@ -8,17 +8,18 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
   fullName  String
-  email     String    @unique
+  email     String     @unique
   password  String
   bio       String?
   aboutMe   String?
-  credit    Int       @default(20)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  credit    Int        @default(20)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   skills    Skill[]
   deposits  Deposit[]
+  learnings Learning[]
 
   @@map("users")
 }
@@ -55,9 +56,12 @@ model Skill {
 }
 
 model Learning {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  name   String
-  userId String @db.ObjectId
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  userId    String   @db.ObjectId
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("learnings")
 }

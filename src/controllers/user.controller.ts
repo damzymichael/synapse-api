@@ -53,4 +53,32 @@ export default Controller({
 
     return res.status(200).send("Skill removed successfully")
   },
+
+  async addLearn(req: Request<{}, {}, { name: string }>, res) {
+    const { name } = req.body
+    const userId = req.user.id
+
+    await prisma.learning.create({ data: { name, userId } })
+
+    return res.status(201).send("Learning preference added")
+  },
+
+  async getLearn(req, res) {
+    const userId = req.user.id
+
+    const learnings = await prisma.learning.findMany({
+      where: { userId },
+      select: { name: true, id: true },
+    })
+
+    return res.status(200).send(learnings)
+  },
+
+  async deleteLearn(req: Request<{ id: string }>, res) {
+    const learnId = req.params.id
+
+    await prisma.learning.delete({ where: { id: learnId } })
+
+    return res.status(200).send("Deleted successfully")
+  },
 })

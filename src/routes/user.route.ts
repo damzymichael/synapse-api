@@ -16,4 +16,10 @@ router.post("/skills", controller.addSkill)
 
 router.delete("/skills/:id", controller.deleteSkill)
 
+router.get("/learn", controller.getLearn)
+
+router.post("/learn", controller.addLearn)
+
+router.delete("/learn/:id", controller.deleteLearn)
+
 export default router
