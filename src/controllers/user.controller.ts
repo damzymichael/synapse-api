@@ -6,7 +6,7 @@ import { User, Skill } from "@prisma/client"
 
 type ProfileUpdateSchema = Pick<User, "email" | "fullName" | "aboutMe" | "bio">
 
-type AddSKillSchema = Pick<Skill, "name" | "level">
+type AddSKillSchema = Pick<Skill, "name" | "level" | "credit">
 
 export default Controller({
   async getProfile(req, res) {
@@ -39,9 +39,9 @@ export default Controller({
   },
 
   async addSkill(req: Request<{}, {}, AddSKillSchema>, res) {
-    const { name, level } = req.body
+    const { name, level, credit } = req.body
 
-    await prisma.skill.create({ data: { userId: req.user.id, name, level } })
+    await prisma.skill.create({ data: { userId: req.user.id, name, level, credit } })
 
     return res.status(201).send("Skill added successfully")
   },

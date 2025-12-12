@@ -45,6 +45,7 @@ model Deposit {
 model Skill {
   id        String      @id @default(auto()) @map("_id") @db.ObjectId
   name      String
+  credit    Int         @default(0)
   level     SKILL_LEVEL
   userId    String      @db.ObjectId
   user      User        @relation(fields: [userId], references: [id])

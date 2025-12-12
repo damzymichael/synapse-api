@@ -9,6 +9,8 @@ import authRoutes from "./routes/auth.route"
 import userRoutes from "./routes/user.route"
 import walletRoutes from "./routes/wallet.route"
 import env from "./lib/env"
+import tradeRoutes from "./routes/trade.route"
+import prisma from "./lib/db.connection"
 
 const homeMessage = `
 <div style="display: flex; align-items: center; justify-content: center; height: 90vh"> 
@@ -38,6 +40,8 @@ app.use("/auth", authRoutes)
 app.use("/user", userRoutes)
 
 app.use("/wallet", walletRoutes)
+
+app.use("/trade", tradeRoutes)
 
 //Not found
 app.use((_, __, next) => next(createHttpError(404, "Endpoint not found")))
