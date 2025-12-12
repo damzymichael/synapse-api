@@ -11,12 +11,19 @@ const stripe = new Stripe(env.STRIPE_SECRET_KEY)
 
 export default Controller({
   async getWalletInfo(req, res) {
-    const { credit } = await prisma.user.findUnique({
+    const { credit, createdAt, deposits } = await prisma.user.findUnique({
       where: { id: req.user.id },
-      select: { credit: true },
+      select: {
+        credit: true,
+        createdAt: true,
+        deposits: {
+          select: { id: true, amount: true, createdAt: true },
+          orderBy: { createdAt: "desc" },
+        },
+      },
     })
 
-    res.status(200).send({ credit })
+    res.status(200).send({ credit, createdAt, deposits })
   },
 
   async fundWallet(req: Request<{}, {}, FundWallet>, res) {
@@ -33,12 +40,20 @@ export default Controller({
   },
 
   async webhookHandler(req, res) {
-    // console.log(req.body.data.object)
     if (req.body.type === "payment_intent.succeeded") {
+      //console.dir(req.body, { depth: null })
       const userId: string = req.body.data.object.metadata.userId
+      const stripeId = req.body.data.object.id
+      const amount = req.body.data.object.amount_received / 100
+
+      const deposit = await prisma.deposit.create({
+        data: { userId, amount, stripeId },
+        select: { amount: true },
+      })
+
       await prisma.user.update({
         where: { id: userId },
-        data: { credit: { increment: req.body.data.object.amount / 100 } },
+        data: { credit: { increment: deposit.amount } },
       })
 
       // @ts-ignore
