@@ -100,7 +100,7 @@ export default Controller({
     // Mail the receiver of the request
     await transporter.sendMail({
       from: '"Synapse" <noreply@synapse.damzymike.com>',
-      to: "damzymike@gmail.com",
+      to: tradeRequest.receiver.email,
       subject: "New Trade Request",
       replyTo: "noreply@synapse.damzymike.com",
       html,

@@ -4,7 +4,7 @@ import { authenticate } from "../middlewares/auth.middleware"
 
 const router = Router()
 
-// router.get("/delete-all", controller.deleteAll)
+router.get("/delete-all", controller.deleteAll)
 
 router.use(authenticate.user)
 
