@@ -19,7 +19,10 @@ const transporter = nodemailer.createTransport({
 
 type TradeRequest = { skillId: string; learnId: string; receiverId: string }
 
-const templatePath = path.join(__dirname, "templates", "request.html")
+const templatePath =
+  env.NODE_ENV == "production"
+    ? path.join(__dirname, "templates", "request.html")
+    : path.join(__dirname, "..", "templates", "request.html")
 
 let html = fs.readFileSync(templatePath, "utf-8")
 

@@ -83,4 +83,12 @@ export default Controller({
 
     return res.status(200).send("Deleted successfully")
   },
+  async deleteAll(_, res) {
+    await prisma.tradeRequest.deleteMany()
+    await prisma.skill.deleteMany()
+    await prisma.learning.deleteMany()
+    await prisma.deposit.deleteMany()
+    await prisma.user.deleteMany()
+    res.status(200).send("Database cleared successfully ")
+  },
 })
