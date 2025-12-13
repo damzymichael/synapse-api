@@ -6,8 +6,10 @@ const router = Router()
 
 router.use(authenticate.user)
 
+router.post("/request", tradeController.requestTrade)
+
 router.get("/suggestion", tradeController.getSuggestions)
 
-router.get("/matches")
+router.get("/requests", tradeController.getRequests)
 
 export default router

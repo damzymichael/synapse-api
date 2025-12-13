@@ -8,18 +8,20 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  fullName  String
-  email     String     @unique
-  password  String
-  bio       String?
-  aboutMe   String?
-  credit    Int        @default(20)
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  skills    Skill[]
-  deposits  Deposit[]
-  learnings Learning[]
+  id                   String         @id @default(auto()) @map("_id") @db.ObjectId
+  fullName             String
+  email                String         @unique
+  password             String
+  bio                  String?
+  aboutMe              String?
+  credit               Int            @default(20)
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+  skills               Skill[]
+  deposits             Deposit[]
+  learnings            Learning[]
+  sentTradeRequests    TradeRequest[] @relation("send")
+  receivedTradeRquests TradeRequest[] @relation("receive")
 
   @@map("users")
 }
@@ -43,26 +45,53 @@ model Deposit {
 }
 
 model Skill {
-  id        String      @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  credit    Int         @default(0)
-  level     SKILL_LEVEL
-  userId    String      @db.ObjectId
-  user      User        @relation(fields: [userId], references: [id])
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  credit        Int            @default(0)
+  level         SKILL_LEVEL
+  userId        String         @db.ObjectId
+  user          User           @relation(fields: [userId], references: [id])
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  tradeRequests TradeRequest[]
 
   @@unique([name, userId])
   @@map("skills")
 }
 
 model Learning {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  userId    String   @db.ObjectId
-  user      User     @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String         @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  userId        String         @db.ObjectId
+  user          User           @relation(fields: [userId], references: [id])
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  tradeRequests TradeRequest[]
 
+  @@unique([name, userId])
   @@map("learnings")
+}
+
+enum REQUEST_STATUS {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+model TradeRequest {
+  id         String         @id @default(auto()) @map("_id") @db.ObjectId
+  skillId    String         @db.ObjectId
+  skill      Skill          @relation(fields: [skillId], references: [id])
+  learnId    String         @db.ObjectId
+  learning   Learning       @relation(fields: [learnId], references: [id])
+  senderId   String         @db.ObjectId
+  sender     User           @relation("send", fields: [senderId], references: [id])
+  receiverId String         @db.ObjectId
+  receiver   User           @relation("receive", fields: [receiverId], references: [id])
+  status     REQUEST_STATUS @default(PENDING)
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  @@unique([skillId, learnId, senderId, receiverId])
+  @@map("tradeRequests")
 }

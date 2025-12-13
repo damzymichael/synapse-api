@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skill Request</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+          Cantarell, "Helvetica Neue", Arial, sans-serif;
+        background: #f9fafb;
+        color: #111827;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+
+      .card {
+        background: #ffffff;
+        max-width: 520px;
+        width: 100%;
+        padding: 32px;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+        text-align: center;
+      }
+
+      .title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+      }
+
+      .message {
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #374151;
+      }
+
+      .highlight {
+        font-weight: 600;
+        color: #111827;
+      }
+
+      .skills {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .badge {
+        padding: 8px 14px;
+        border-radius: 999px;
+        font-size: 0.85rem;
+        background: #f3f4f6;
+        color: #111827;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="title">New Skill Request</div>
+
+      <p class="message">
+        <span class="highlight">{{senderName}}</span> has requested for your
+        <span class="highlight">{{receiverSkills}}</span> skills and wants to teach you
+        <span class="highlight">{{senderSkills}}</span>.
+      </p>
+
+      <div class="skills">
+        <div class="badge">{{senderSkills}}</div>
+        <div class="badge">{{receiverSkills}}</div>
+      </div>
+    </div>
+  </body>
+</html>

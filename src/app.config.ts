@@ -10,7 +10,6 @@ import userRoutes from "./routes/user.route"
 import walletRoutes from "./routes/wallet.route"
 import env from "./lib/env"
 import tradeRoutes from "./routes/trade.route"
-import prisma from "./lib/db.connection"
 
 const homeMessage = `
 <div style="display: flex; align-items: center; justify-content: center; height: 90vh"> 

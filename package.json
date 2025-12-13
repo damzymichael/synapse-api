@@ -28,6 +28,7 @@
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
+    "nodemailer": "^7.0.11",
     "stripe": "^20.0.0"
   },
   "devDependencies": {
@@ -39,6 +40,7 @@
     "@types/morgan": "^1.9.9",
     "@types/multer": "^1.4.11",
     "@types/node": "^20.8.2",
+    "@types/nodemailer": "^7.0.4",
     "prisma": "6.19",
     "terser-webpack-plugin": "^5.3.9",
     "ts-loader": "^9.4.4",
